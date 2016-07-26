@@ -14,6 +14,23 @@ function transformResponse(response) {
     return response.json();
 }
 
+/**
+ * Formats email message
+ */
+function formatMessage(message) {
+    return {
+        id: msg.mail_id,
+        uid: msg.mail_unique_id,
+        from: msg.mail_from,
+        subject: msg.mail_subject,
+        preview: msg.mail_preview,
+        text: msg.mail_preview.replace(/\s/g, ' ').trim(),
+        textOnly: msg.mail_text_only,
+        html: msg.mail_html,
+        timestamp: new Date(parseInt(msg.mail_timestamp + '000'))
+    };
+}
+
 class MailBox {
     /**
      * @constructor
@@ -76,7 +93,8 @@ class MailBox {
     getMessages(address) {
         address = address || this.address;
 
-        return fetch(`${this.apiUrl}/request/mail/id/${this.createAddressHash(address)}/format/json/`).then(transformResponse);
+        return fetch(`${this.apiUrl}/request/mail/id/${this.createAddressHash(address)}/format/json/`).then(transformResponse)
+                                                                                                      .then(messages => messages.map(formatMessage));
     }
 
     /**
