@@ -64,8 +64,8 @@ class MailBox {
      * @returns {Promise.<String, Error>}
      */
     getEmailAddress(len) {
-        return getAvailableDomains()
-                .then(availableDomains => generateRandomEmail(availableDomains, len));
+        return this.getAvailableDomains()
+                   .then(availableDomains => this.generateRandomEmail(availableDomains, len));
     }
 
     /**
