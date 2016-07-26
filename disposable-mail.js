@@ -69,14 +69,12 @@ class MailBox {
     }
 
     /**
-     * Receives inbox from temp-mail.ru
-     * @param {string} address
+     * Receives all messages from inbox at temp-mail.ru
+     * @param {string} [address]
      * @returns {Promise.<(Object|Array), Error>}
      */
     getMessages(address) {
-        if (!address) {
-            throw new Error('Please specify an email address');
-        }
+        address = address || this.address;
 
         return fetch(`${this.apiUrl}/request/mail/id/${this.createAddressHash(address)}/format/json/`).then(transformResponse);
     }
