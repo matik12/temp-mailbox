@@ -19,15 +19,15 @@ function transformResponse(response) {
  */
 function formatMessage(message) {
     return {
-        id: msg.mail_id,
-        uid: msg.mail_unique_id,
-        from: msg.mail_from,
-        subject: msg.mail_subject,
-        preview: msg.mail_preview,
-        text: msg.mail_preview.replace(/\s/g, ' ').trim(),
-        textOnly: msg.mail_text_only,
-        html: msg.mail_html,
-        timestamp: new Date(parseInt(msg.mail_timestamp + '000'))
+        id: message.mail_id,
+        uid: message.mail_unique_id,
+        from: message.mail_from,
+        subject: message.mail_subject,
+        preview: message.mail_preview,
+        text: message.mail_preview.replace(/\s/g, ' ').trim(),
+        textOnly: message.mail_text_only,
+        html: message.mail_html,
+        timestamp: new Date(parseInt(message.mail_timestamp + '000'))
     };
 }
 
