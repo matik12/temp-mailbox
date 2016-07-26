@@ -18,30 +18,36 @@ class MailBox {
     /**
      * @constructor
      */
-    constructor(apiUrl) {
+    constructor(address, apiUrl) {
+        this.address = address || null;
+        this.addressHash = address ? this.createAddressHash(address) null;
         this.apiUrl = apiUrl || API_URL;
     }
 
     /**
-     * Generates MD5 hash from email
-     * @param {string} email
+     * Generates MD5 hash from email address
+     * @param {string} address
      * @returns {string}
      */
-    getEmailHash(email) {
-        return crypto.createHash('md5').update(email).digest('hex');
+    createAddressHash(address) {
+        this.addressHash = crypto.createHash('md5').update(address).digest('hex');
+
+        return this.addressHash;
     }
 
     /**
-     * Generates random email on one of the available domains
+     * Generates random email address on one of the available domains
      * @param {Array} domains
      * @param {number} [len=7]
      * @returns {string}
      */
-    getRandomEmail(domains, len = 7) {
+    generateRandomEmail(domains, len = 7) {
         const name = Math.random().toString(36).substring(len);
         const domain = domains[Math.floor(Math.random() * domains.length)];
 
-        return name + domain;
+        this.address = name + domain;
+
+        return this.address;
     }
 
     /**
@@ -53,26 +59,35 @@ class MailBox {
     }
 
     /**
-     * Generates email on temp-mail.ru
+     * Generates email address on temp-mail.ru
      * @param {number} [len]
      * @returns {Promise.<String, Error>}
      */
-    generateEmail(len) {
+    getEmailAddress(len) {
         return getAvailableDomains()
-                .then(availableDomains => getRandomEmail(availableDomains, len));
+                .then(availableDomains => generateRandomEmail(availableDomains, len));
     }
 
     /**
      * Receives inbox from temp-mail.ru
-     * @param {string} email
+     * @param {string} address
      * @returns {Promise.<(Object|Array), Error>}
      */
-    getInbox(email) {
-        if (!email) {
-            throw new Error('Please specify email');
+    getMessages(address) {
+        if (!address) {
+            throw new Error('Please specify an email address');
         }
 
-        return fetch(`${this.apiUrl}/request/mail/id/${this.getEmailHash(email)}/format/json/`).then(transformResponse);
+        return fetch(`${this.apiUrl}/request/mail/id/${this.createAddressHash(address)}/format/json/`).then(transformResponse);
+    }
+
+    /**
+     * Deletes message with a given id
+     * @param {string} messageId
+     * @returns {Promise.<(Object|Array), Error>}
+     */
+    deleteMessage(messageId) {
+        return fetch(`${this.apiUrl}/request/delete/id/${messageId}`).then(transformResponse);
     }
 }
 
