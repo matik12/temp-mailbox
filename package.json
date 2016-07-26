@@ -1,0 +1,19 @@
+{
+  "name": "disposable-mail",
+  "version": "0.0.1",
+  "description": "Node.js wrapper for api.temp-mail.ru",
+  "main": "disposable-mail.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aj-dev/disposable-mail.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "crypto": "0.0.3",
+    "node-fetch": "1.5.3"
+  }
+}
