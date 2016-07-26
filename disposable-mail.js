@@ -20,7 +20,7 @@ class MailBox {
      */
     constructor(address, apiUrl) {
         this.address = address || null;
-        this.addressHash = address ? this.createAddressHash(address) null;
+        this.addressHash = address ? this.createAddressHash(address) : null;
         this.apiUrl = apiUrl || API_URL;
     }
 
