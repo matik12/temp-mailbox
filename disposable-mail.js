@@ -59,8 +59,8 @@ class MailBox {
      * @returns {string}
      */
     generateRandomEmail(domains, len = 7) {
-        const name = Math.random().toString(36).substring(len);
-        const domain = domains[Math.floor(Math.random() * domains.length)];
+        let name = Math.random().toString(36).substring(len);
+        let domain = domains[Math.floor(Math.random() * domains.length)];
 
         this.address = name + domain;
 
@@ -93,8 +93,12 @@ class MailBox {
     getMessages(address) {
         address = address || this.address;
 
-        return fetch(`${this.apiUrl}/request/mail/id/${this.createAddressHash(address)}/format/json/`).then(transformResponse)
-                                                                                                      .then(messages => messages.map(formatMessage));
+        let url = `${this.apiUrl}/request/mail/id/${this.createAddressHash(address)}/format/json/`;
+
+        return fetch(url).then(transformResponse)
+                         .then(function onFulfilled(response) {
+                             return Array.isArray(response) ? response.map(formatMessage) : response;
+                         });
     }
 
     /**
