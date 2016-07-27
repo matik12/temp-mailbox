@@ -35,7 +35,7 @@ class MailBox {
     /**
      * @constructor
      * @param {string} address
-     * @returns {string} apiUrl
+     * @param {string} apiUrl
      */
     constructor(address, apiUrl) {
         this.address = address || null;
