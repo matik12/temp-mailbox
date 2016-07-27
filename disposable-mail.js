@@ -39,6 +39,7 @@ class MailBox {
         this.address = address || null;
         this.addressHash = address ? this.createAddressHash(address) : null;
         this.apiUrl = apiUrl || API_URL;
+        this.messages = [];
     }
 
     /**
@@ -96,8 +97,10 @@ class MailBox {
         let url = `${this.apiUrl}/request/mail/id/${this.createAddressHash(address)}/format/json/`;
 
         return fetch(url).then(transformResponse)
-                         .then(function onFulfilled(response) {
-                             return Array.isArray(response) ? response.map(formatMessage) : response;
+                         .then(response => {
+                             this.messages = Array.isArray(response) ? response.map(formatMessage) : [];
+
+                             return this.messages.length ? this.messages : response;
                          });
     }
 
@@ -107,7 +110,26 @@ class MailBox {
      * @returns {Promise.<(Object|Array), Error>}
      */
     deleteMessage(messageId) {
-        return fetch(`${this.apiUrl}/request/delete/id/${messageId}`).then(transformResponse);
+        this.messages.forEach(function deleteMsg(message, index) {
+            this.messages.splice(index, 1);
+        }, this);
+
+        return fetch(`${this.apiUrl}/request/delete/id/${messageId}/format/json`).then(transformResponse);
+    }
+
+    /**
+     * Deletes all messages from inbox
+     * @returns {Promise.<Object, Error>}
+     */
+    deleteAllMessages() {
+        return Promise.all(this.messages.map(function (message) {
+                          return this.deleteMessage(message.id);
+                      }, this))
+                      .then(function onFulfilled(response) {
+                          this.messages.length = 0;
+
+                          return response;
+                      });
     }
 }
 
