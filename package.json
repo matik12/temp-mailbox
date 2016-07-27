@@ -3,14 +3,23 @@
   "version": "0.0.1",
   "description": "Node.js wrapper for api.temp-mail.ru",
   "main": "disposable-mail.js",
+  "files": [
+    "disposable-mail.js",
+    "package.json",
+    "LICENSE",
+    "README.md"
+  ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/aj-dev/disposable-mail.git"
+    "url": "https://github.com/aj-dev/disposable-mail"
+  },
+  "bugs": {
+	"url": "https://github.com/aj-dev/disposable-mail/issues"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Audrius Jakumavicius<audrius.jakumavicius@ev-box.com>",
   "license": "MIT",
   "dependencies": {
     "crypto": "0.0.3",
