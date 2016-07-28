@@ -5,7 +5,7 @@ Node.js wrapper for api.temp-mail.ru
 - ```npm i disposable-mail --save-dev```
 
 # Usage
-- require it where needed
+- Require it where needed
 
 	```js
 	let MailBox = require('disposable-mail');
@@ -14,7 +14,7 @@ Node.js wrapper for api.temp-mail.ru
 - Create new instance of MailBox
 
 	```js
-	// Provide optional `emailAddress` and apiUrl parameters
+	// Provide optional `emailAddress` and `apiUrl` parameters
 	// If no `emailAddress` is provided, it generates one. If no `len` param is provided, 7 is used by default
 	let mailBox = new MailBox();
 	```
@@ -25,13 +25,13 @@ Node.js wrapper for api.temp-mail.ru
 	mailBox.getAvailableDomains().then(domains => console.log(domains));
 	```
 
-- Generate random email address on one of the avaialble domains
+- Generate random email address on one of the available domains
 
 	```js
 	// Provide optional `len` parameter to limit the length of email address
 	mailBox.getEmailAddress().then(emailAddress => console.log(emailAddress));
 
-	// Email address and email address md5 hash are also avaialble on the instance
+	// Email address and email address md5 hash are also available on the instance
 	console.log(mailBox.address);
 	console.log(mailBox.addressHash);
 	```
@@ -41,7 +41,7 @@ Node.js wrapper for api.temp-mail.ru
 	```js
 	mailBox.getMessages().then(messages => console.log(messages));
 
-	// Mesages are also avaialble on the instance
+	// Mesages are also available on the instance
 	console.log(mailBox.messages);
 	```
 
