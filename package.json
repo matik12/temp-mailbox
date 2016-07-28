@@ -1,20 +1,20 @@
 {
   "name": "disposable-mail",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Node.js wrapper for api.temp-mail.ru",
   "main": "disposable-mail.js",
   "keywords": [
-  	"temp-mail",
-  	"disposable-mail",
-  	"mail",
-  	"test mail"
+    "temp-mail",
+    "disposable-mail",
+    "mail",
+    "test mail"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/evbox/disposable-mail"
   },
   "bugs": {
-	"url": "https://github.com/evbox/disposable-mail/issues"
+    "url": "https://github.com/evbox/disposable-mail/issues"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
