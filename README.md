@@ -15,11 +15,11 @@ Node.js wrapper for api.temp-mail.ru
 
 	```js
 	// Provide optional `emailAddress` and `apiUrl` parameters
-	// If no `emailAddress` is provided, it generates one. If no `len` param is provided, 7 is used by default
+	// If no `emailAddress` is provided, it generates one
 	let mailBox = new MailBox();
 	```
 
-- Get avaialble domains
+- Get available domains
 
 	```js
 	mailBox.getAvailableDomains().then(domains => console.log(domains));
@@ -29,6 +29,7 @@ Node.js wrapper for api.temp-mail.ru
 
 	```js
 	// Provide optional `len` parameter to limit the length of email address
+	//  If no `len` param is provided, 7 is used by default
 	mailBox.getEmailAddress().then(emailAddress => console.log(emailAddress));
 
 	// Email address and email address md5 hash are also available on the instance
