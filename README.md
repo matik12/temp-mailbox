@@ -59,4 +59,4 @@ Node.js wrapper for api.temp-mail.ru
 	```
 
 # License
-Licensed under the MIT license. Copyright (c) 2016 EV-Box
+Licensed under the MIT license. Copyright (c) 2016-2017 EV-Box
