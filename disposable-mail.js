@@ -34,8 +34,8 @@ function formatMessage(message) {
 class MailBox {
     /**
      * @constructor
-     * @param {string} address
-     * @param {string} apiUrl
+     * @param {string} [address]
+     * @param {string} [apiUrl]
      */
     constructor(address, apiUrl) {
         this.address = address || null;
