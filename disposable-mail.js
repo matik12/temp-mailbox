@@ -127,7 +127,7 @@ class MailBox {
         return Promise.all(this.messages.map(function (message) {
                           return this.deleteMessage(message.id);
                       }, this))
-                      .then(function onFulfilled(response) {
+                      .then(response => {
                           this.messages.length = 0;
 
                           return response;
