@@ -5,7 +5,7 @@ const fetch = require('node-fetch');
  * @type {string}
  * @const
  */
-const API_URL = 'https://api.temp-mail.ru';
+const API_URL = 'http://api2.temp-mail.org';
 
 /**
  * Transforms response to JSON
@@ -34,14 +34,29 @@ function formatMessage(message) {
 class MailBox {
     /**
      * @constructor
+     * @param {string} credentials Base64 encoded `username:password` combination used for authentication to the API
      * @param {string} [address]
      * @param {string} [apiUrl]
      */
-    constructor(address, apiUrl) {
+    constructor(credentials, address, apiUrl) {
+        this.credentials = credentials;
+        this.params = {
+            headers: {
+                Authorization: 'Basic ' + this.credentials
+            }
+        };
         this.address = address || null;
         this.addressHash = address ? this.createAddressHash(address) : null;
         this.apiUrl = apiUrl || API_URL;
         this.messages = [];
+    }
+
+    /**
+     *  Checks used requests count and limits for a given account
+     *  @returns {Promise.<Object, Error>}
+     */
+    getAccountUsage() {
+        return fetch(`${API_URL}/request/account/format/json/`, this.params).then(transformResponse);
     }
 
     /**
@@ -75,7 +90,7 @@ class MailBox {
      * @returns {Promise.<Array, Error>}
      */
     getAvailableDomains() {
-        return fetch(`${this.apiUrl}/request/domains/format/json/`).then(transformResponse);
+        return fetch(`${this.apiUrl}/request/domains/format/json/`, this.params).then(transformResponse);
     }
 
     /**
@@ -98,12 +113,12 @@ class MailBox {
 
         let url = `${this.apiUrl}/request/mail/id/${this.createAddressHash(address)}/format/json/`;
 
-        return fetch(url).then(transformResponse)
-                         .then(response => {
-                             this.messages = Array.isArray(response) ? response.map(formatMessage) : [];
+        return fetch(url, this.params).then(transformResponse)
+                                      .then(response => {
+                                          this.messages = Array.isArray(response) ? response.map(formatMessage) : [];
 
-                             return this.messages.length ? this.messages : response;
-                         });
+                                          return this.messages.length ? this.messages : response;
+                                      });
     }
 
     /**
@@ -116,7 +131,7 @@ class MailBox {
             this.messages.splice(index, 1);
         });
 
-        return fetch(`${this.apiUrl}/request/delete/id/${messageId}/format/json`).then(transformResponse);
+        return fetch(`${this.apiUrl}/request/delete/id/${messageId}/format/json`, this.params).then(transformResponse);
     }
 
     /**

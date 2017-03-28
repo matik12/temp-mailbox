@@ -1,5 +1,5 @@
 # disposable-mail
-Node.js wrapper for api.temp-mail.ru
+Node.js wrapper for [https://temp-mail.org/en/api/](https://temp-mail.org/en/api/)
 
 # Installation
 - ```npm i disposable-mail --save-dev```
@@ -12,12 +12,12 @@ Node.js wrapper for api.temp-mail.ru
 	```
 
 - Create new instance of MailBox
-
-	```js
-	// Provide optional `emailAddress` and `apiUrl` parameters
-	// If no `emailAddress` is provided, it generates one
-	let mailBox = new MailBox();
-	```
+    ```js
+    // Credentials is a base64 encoded `username:password` combination. You can optionally provide `emailAddress` and `apiUrl` parameters
+    // If no `emailAddress` is provided, it generates one
+    let credentials = Buffer.from('testuser:password123').toString('base64');
+    let mailBox = new MailBox(credentials);
+    ```
 
 - Get available domains
 
