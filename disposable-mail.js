@@ -112,9 +112,9 @@ class MailBox {
      * @returns {Promise.<(Object|Array), Error>}
      */
     deleteMessage(messageId) {
-        this.messages.forEach(function deleteMsg(message, index) {
+        this.messages.forEach((message, index) => {
             this.messages.splice(index, 1);
-        }, this);
+        });
 
         return fetch(`${this.apiUrl}/request/delete/id/${messageId}/format/json`).then(transformResponse);
     }
@@ -124,9 +124,9 @@ class MailBox {
      * @returns {Promise.<Object, Error>}
      */
     deleteAllMessages() {
-        return Promise.all(this.messages.map(function (message) {
+        return Promise.all(this.messages.map(message => {
                           return this.deleteMessage(message.id);
-                      }, this))
+                      }))
                       .then(response => {
                           this.messages.length = 0;
 
