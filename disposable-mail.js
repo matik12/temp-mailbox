@@ -35,19 +35,19 @@ class MailBox {
     /**
      * @constructor
      * @param {string} credentials Base64 encoded `username:password` combination used for authentication to the API
-     * @param {string} [address]
+     * @param {string|null} [address]
      * @param {string} [apiUrl]
      */
-    constructor(credentials, address, apiUrl) {
+    constructor(credentials, address = null, apiUrl = API_URL) {
         this.credentials = credentials;
         this.params = {
             headers: {
                 Authorization: 'Basic ' + this.credentials
             }
         };
-        this.address = address || null;
+        this.address = address;
         this.addressHash = address ? this.createAddressHash(address) : null;
-        this.apiUrl = apiUrl || API_URL;
+        this.apiUrl = apiUrl;
         this.messages = [];
     }
 
@@ -56,7 +56,7 @@ class MailBox {
      *  @returns {Promise.<Object, Error>}
      */
     getAccountUsage() {
-        return fetch(`${API_URL}/request/account/format/json/`, this.params).then(transformResponse);
+        return fetch(`${this.apiUrl}/request/account/format/json/`, this.params).then(transformResponse);
     }
 
     /**
