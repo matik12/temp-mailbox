@@ -1,5 +1,5 @@
 # disposable-mail
-Node.js wrapper for [https://temp-mail.org/en/api/](https://temp-mail.org/en/api/)
+Node.js wrapper for [http://temp-mail.ru/en/api/](http://temp-mail.ru/en/api/)
 
 # Installation
 - ```npm i disposable-mail --save-dev```
@@ -62,5 +62,3 @@ Licensed under the MIT license.
 Original work Copyright (c) 2016 EV-Box
 
 Modified work Copyright 2017 Craig de Gouveia
-
-Modified work Copyright (c) 2017 Craig de Gouveia
