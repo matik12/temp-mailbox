@@ -56,9 +56,9 @@ class MailBox {
     }
 
     /**
-     * Generates random email address on one of the available domains
+     * Generates email address on one of the available domains, if no value is supplied a random address is generated.
      * @param {Array} domains
-     * @param {number} [len=7]
+     * @param {String} [str]
      * @returns {string}
      */
     generateRandomEmail(domains, str) {
@@ -81,7 +81,7 @@ class MailBox {
 
     /**
      * Generates email address on temp-mail.ru
-     * @param {number} [len]
+     * @param {String} [str]
      * @returns {Promise.<String, Error>}
      */
     getEmailAddress(str) {
