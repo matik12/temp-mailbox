@@ -5,7 +5,7 @@ const fetch = require('node-fetch');
  * @type {string}
  * @const
  */
-const API_URL = 'http://api2.temp-mail.org';
+const API_URL = 'http://api.temp-mail.ru';
 
 /**
  * Transforms response to JSON
@@ -39,12 +39,12 @@ class MailBox {
      * @param {string} [apiUrl]
      */
     constructor(credentials, address = null, apiUrl = API_URL) {
-        this.credentials = credentials;
-        this.params = {
-            headers: {
-                Authorization: 'Basic ' + this.credentials
-            }
-        };
+        // this.credentials = credentials;
+        // this.params = {
+        //     headers: {
+        //         Authorization: 'Basic ' + this.credentials
+        //     }
+        // };
         this.address = address;
         this.addressHash = address ? this.createAddressHash(address) : null;
         this.apiUrl = apiUrl;
@@ -56,7 +56,7 @@ class MailBox {
      *  @returns {Promise.<Object, Error>}
      */
     getAccountUsage() {
-        return fetch(`${this.apiUrl}/request/account/format/json/`, this.params).then(transformResponse);
+        return fetch(`${this.apiUrl}/request/account/format/json/`).then(transformResponse);
     }
 
     /**
@@ -90,7 +90,7 @@ class MailBox {
      * @returns {Promise.<Array, Error>}
      */
     getAvailableDomains() {
-        return fetch(`${this.apiUrl}/request/domains/format/json/`, this.params).then(transformResponse);
+        return fetch(`${this.apiUrl}/request/domains/format/json/`).then(transformResponse);
     }
 
     /**
@@ -100,7 +100,7 @@ class MailBox {
      */
     getEmailAddress(len) {
         return this.getAvailableDomains()
-                   .then(availableDomains => this.generateRandomEmail(availableDomains, len));
+            .then(availableDomains => this.generateRandomEmail(availableDomains, len));
     }
 
     /**
@@ -113,12 +113,12 @@ class MailBox {
 
         let url = `${this.apiUrl}/request/mail/id/${this.createAddressHash(address)}/format/json/`;
 
-        return fetch(url, this.params).then(transformResponse)
-                                      .then(response => {
-                                          this.messages = Array.isArray(response) ? response.map(formatMessage) : [];
+        return fetch(url).then(transformResponse)
+            .then(response => {
+                this.messages = Array.isArray(response) ? response.map(formatMessage) : [];
 
-                                          return this.messages.length ? this.messages : response;
-                                      });
+                return this.messages.length ? this.messages : response;
+            });
     }
 
     /**
@@ -131,7 +131,7 @@ class MailBox {
             this.messages.splice(index, 1);
         });
 
-        return fetch(`${this.apiUrl}/request/delete/id/${messageId}/format/json`, this.params).then(transformResponse);
+        return fetch(`${this.apiUrl}/request/delete/id/${messageId}/format/json`).then(transformResponse);
     }
 
     /**
@@ -140,13 +140,13 @@ class MailBox {
      */
     deleteAllMessages() {
         return Promise.all(this.messages.map(message => {
-                          return this.deleteMessage(message.id);
-                      }))
-                      .then(response => {
-                          this.messages.length = 0;
+                return this.deleteMessage(message.id);
+            }))
+            .then(response => {
+                this.messages.length = 0;
 
-                          return response;
-                      });
+                return response;
+            });
     }
 }
 

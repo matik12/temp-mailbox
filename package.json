@@ -13,18 +13,23 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/evbox/disposable-mail"
+    "url": "https://github.com/hughzurname/disposable-mail"
   },
   "bugs": {
-    "url": "https://github.com/evbox/disposable-mail/issues"
+    "url": "https://github.com/hughzurname/disposable-mail/issues"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
-  "author": "Audrius Jakumavicius <audrius.jakumavicius@ev-box.com>",
+  "author": "Craig de Gouveia",
   "license": "MIT",
   "dependencies": {
     "crypto": "0.0.3",
     "node-fetch": "1.6.3"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
+    "mocha": "^3.3.0"
   }
 }
