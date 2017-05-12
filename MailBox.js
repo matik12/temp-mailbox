@@ -34,29 +34,14 @@ function formatMessage(message) {
 class MailBox {
     /**
      * @constructor
-     * @param {string} credentials Base64 encoded `username:password` combination used for authentication to the API
      * @param {string|null} [address]
      * @param {string} [apiUrl]
      */
-    constructor(credentials, address = null, apiUrl = API_URL) {
-        // this.credentials = credentials;
-        // this.params = {
-        //     headers: {
-        //         Authorization: 'Basic ' + this.credentials
-        //     }
-        // };
+    constructor(address = null, apiUrl = API_URL) {
         this.address = address;
         this.addressHash = address ? this.createAddressHash(address) : null;
         this.apiUrl = apiUrl;
         this.messages = [];
-    }
-
-    /**
-     *  Checks used requests count and limits for a given account
-     *  @returns {Promise.<Object, Error>}
-     */
-    getAccountUsage() {
-        return fetch(`${this.apiUrl}/request/account/format/json/`).then(transformResponse);
     }
 
     /**
@@ -76,8 +61,9 @@ class MailBox {
      * @param {number} [len=7]
      * @returns {string}
      */
-    generateRandomEmail(domains, len = 7) {
-        let name = Math.random().toString(36).substring(len);
+    generateRandomEmail(domains, str) {
+        let name
+        !str ? name = Math.random().toString(36).substring(10) : name = str
         let domain = domains[Math.floor(Math.random() * domains.length)];
 
         this.address = name + domain;
@@ -98,9 +84,9 @@ class MailBox {
      * @param {number} [len]
      * @returns {Promise.<String, Error>}
      */
-    getEmailAddress(len) {
+    getEmailAddress(str) {
         return this.getAvailableDomains()
-            .then(availableDomains => this.generateRandomEmail(availableDomains, len));
+            .then(availableDomains => this.generateRandomEmail(availableDomains, str));
     }
 
     /**
