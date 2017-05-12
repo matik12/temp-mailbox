@@ -1,15 +1,15 @@
 {
   "name": "disposable-mail",
-  "version": "0.2.1",
+  "version": "0.1.0",
   "description": "Node.js wrapper for https://temp-mail.org/en/api/",
-  "main": "disposable-mail.js",
+  "main": "MailBox.js",
   "keywords": [
     "temp-mail",
     "temporary-mail",
     "disposable-mail",
     "mail",
     "test mail",
-    "ev-box"
+    "hughzurname"
   ],
   "repository": {
     "type": "git",
