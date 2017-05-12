@@ -1,4 +1,4 @@
-# disposable-mail
+# temp-mailbox
 Node.js wrapper for [http://temp-mail.ru/en/api/](http://temp-mail.ru/en/api/)
 
 # Installation
