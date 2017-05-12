@@ -61,4 +61,5 @@ Node.js wrapper for [https://temp-mail.org/en/api/](https://temp-mail.org/en/api
 # License
 Licensed under the MIT license.
 Original work Copyright (c) 2016 EV-Box
-Modified work Copyright 2017 Craig de Gouveia
+
+Modified work Copyright (c) 2017 Craig de Gouveia
