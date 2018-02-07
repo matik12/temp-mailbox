@@ -2,7 +2,7 @@
 Node.js wrapper for [http://temp-mail.ru/en/api/](http://temp-mail.ru/en/api/)
 
 # Installation
-- ```npm i disposable-mail --save-dev```
+- ```npm i matik12/temp-mailbox --save-dev```
 
 # Usage
 - Require it where needed
