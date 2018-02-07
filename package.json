@@ -24,7 +24,7 @@
   "author": "Craig de Gouveia",
   "license": "MIT",
   "dependencies": {
-    "node-fetch": "1.6.3"
+    "node-fetch": "2.0.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
