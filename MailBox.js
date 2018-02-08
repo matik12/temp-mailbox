@@ -151,4 +151,4 @@ class MailBox {
   }
 }
 
-module.exports = MailBox;
+exports["default"] = MailBox;
