@@ -5,7 +5,7 @@ const request = require('request-promise-native');
  * @type {string}
  * @const
  */
-const API_URL = 'http://api.temp-mail.ru';
+const API_URL = 'https://privatix-temp-mail-v1.p.mashape.com';
 
 /**
  * Formats email message
@@ -13,7 +13,6 @@ const API_URL = 'http://api.temp-mail.ru';
 function formatMessage(message) {
   return {
     id: message.mail_id,
-    uid: message.mail_unique_id,
     from: message.mail_from,
     subject: message.mail_subject,
     preview: message.mail_preview,
@@ -27,17 +26,12 @@ function formatMessage(message) {
 class MailBox {
   /**
    * @constructor
-   * @param {string} credentials Base64 encoded `username:password` combination used for authentication to the API
+   * @param {string} [key] Mashape-Key
    * @param {string|null} [address]
    * @param {string} [apiUrl]
    */
-  constructor(credentials, address = null, apiUrl = API_URL) {
-    // this.credentials = credentials;
-    // this.params = {
-    //     headers: {
-    //         Authorization: 'Basic ' + this.credentials
-    //     }
-    // };
+  constructor(key, address = null, apiUrl = API_URL) {
+    this.key = key;
     this.address = address;
     this.addressHash = address ? this.createAddressHash(address) : null;
     this.apiUrl = apiUrl;
@@ -49,15 +43,14 @@ class MailBox {
    *  @returns {Promise.<any>}
    */
   makeRequest(uri) {
-    return request({ uri, json: true });
-  }
-
-  /**
-   *  Checks used requests count and limits for a given account
-   *  @returns {Promise.<Object, Error>}
-   */
-  getAccountUsage() {
-    return this.makeRequest(`${this.apiUrl}/request/account/format/json/`);
+    return request({
+      uri,
+      json: true,
+      headers: {
+        'X-Mashape-Key': this.key,
+        'Accept': 'application/json'
+      }
+    });
   }
 
   /**
@@ -91,7 +84,7 @@ class MailBox {
    * @returns {Promise.<Array, Error>}
    */
   getAvailableDomains() {
-    return this.makeRequest(`${this.apiUrl}/request/domains/format/json/`);
+    return this.makeRequest(`${this.apiUrl}/request/domains/`);
   }
 
   /**
@@ -112,7 +105,7 @@ class MailBox {
   getMessages(address) {
     address = address || this.address;
 
-    let url = `${this.apiUrl}/request/mail/id/${this.createAddressHash(address)}/format/json/`;
+    let url = `${this.apiUrl}/request/mail/id/${this.createAddressHash(address)}/`;
 
     return this.makeRequest(url)
       .then(response => {
@@ -132,7 +125,7 @@ class MailBox {
       this.messages.splice(index, 1);
     });
 
-    return this.makeRequest(`${this.apiUrl}/request/delete/id/${messageId}/format/json`);
+    return this.makeRequest(`${this.apiUrl}/request/delete/id/${messageId}/`);
   }
 
   /**
