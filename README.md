@@ -1,5 +1,5 @@
 # temp-mailbox
-Node.js wrapper for [http://temp-mail.ru/en/api/](http://temp-mail.ru/en/api/)
+Node.js wrapper for [https://privatix-temp-mail-v1.p.mashape.com](https://privatix-temp-mail-v1.p.mashape.com) a private API for Temp Mail
 
 # Installation
 - ```npm i matik12/temp-mailbox --save-dev```
@@ -8,7 +8,7 @@ Node.js wrapper for [http://temp-mail.ru/en/api/](http://temp-mail.ru/en/api/)
 - Require it where needed
 
 	```js
-	let MailBox = require('disposable-mail');
+	let MailBox = require('temp-mailbox');
 	```
 
 - Create new instance of MailBox
