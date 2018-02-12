@@ -1,7 +1,6 @@
 declare module 'temp-mailbox' {
   interface MailMessage {
     id: string;
-    uid: string;
     from: string;
     subject: string;
     preview: string;
@@ -15,7 +14,7 @@ declare module 'temp-mailbox' {
     address: string;
     messages: MailMessage[];
 
-    constructor(credentials?: any, address?: string, apiUrl?: string);
+    constructor(key: string, address?: string, apiUrl?: string);
 
     getAvailableDomains(): Promise<string[]>;
     getEmailAddress(length?: number): Promise<string>;
