@@ -1,5 +1,5 @@
 declare module 'temp-mailbox' {
-  interface MailMessage {
+  export interface MailMessage {
     id: string;
     from: string;
     subject: string;
