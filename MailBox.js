@@ -1,11 +1,18 @@
 const crypto = require('crypto');
 const request = require('request-promise-native');
+const { JSDOM } = require("jsdom");
 
 /**
  * @type {string}
  * @const
  */
 const API_URL = 'https://privatix-temp-mail-v1.p.mashape.com';
+
+/**
+ * @type {string}
+ * @const
+ */
+const CHANGE_EMAIL_URL = 'https://temp-mail.org/en/option/change/'
 
 /**
  * Formats email message
@@ -84,7 +91,14 @@ class MailBox {
    * @returns {Promise.<Array, Error>}
    */
   getAvailableDomains() {
-    return this.makeRequest(`${this.apiUrl}/request/domains/`);
+    return request(CHANGE_EMAIL_URL)
+      .then(htmlString => {
+        const pageDom = new JSDOM(htmlString);
+        const pageDocument = pageDom.window.document;
+
+        return Array.from(pageDocument.querySelectorAll('#domain option'))
+          .map(option => option.value)
+      })
   }
 
   /**
