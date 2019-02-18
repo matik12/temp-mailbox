@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 const request = require('request-promise-native');
 const { JSDOM } = require("jsdom");
+const cloudscraper = require('cloudscraper');
 
 /**
  * @type {string}
@@ -91,23 +92,22 @@ class MailBox {
    * @returns {Promise.<Array, Error>}
    */
   getAvailableDomains() {
-    const requestOptions = {
-      uri: CHANGE_EMAIL_URL,
-      headers: {
-        'Cache-Control': 'private',
-        'Accept': 'application/xml,application/xhtml+xml,text/html;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5',
-        'User-Agent': 'Ubuntu Chromium/34.0.1847.116 Chrome/34.0.1847.116 Safari/537.36'
-      }
-    };
+    return new Promise((resolve, reject) => {
+      cloudscraper.get(CHANGE_EMAIL_URL, function(error, response, body) {
+        if (error) {
+          reject(error);
+        } else {
+          console.log(body)
+          const pageDom = new JSDOM(body);
+          const pageDocument = pageDom.window.document;
 
-    return request(requestOptions)
-      .then(htmlString => {
-        const pageDom = new JSDOM(htmlString);
-        const pageDocument = pageDom.window.document;
+          const domains = Array.from(pageDocument.querySelectorAll('#domain option'))
+            .map(option => option.value)
 
-        return Array.from(pageDocument.querySelectorAll('#domain option'))
-          .map(option => option.value)
-      })
+          resolve(domains);
+        }
+      });
+    });
   }
 
   /**
