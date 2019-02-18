@@ -91,7 +91,16 @@ class MailBox {
    * @returns {Promise.<Array, Error>}
    */
   getAvailableDomains() {
-    return request(CHANGE_EMAIL_URL)
+    const requestOptions = {
+      uri: CHANGE_EMAIL_URL,
+      headers: {
+        'Cache-Control': 'private',
+        'Accept': 'application/xml,application/xhtml+xml,text/html;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5',
+        'User-Agent': 'Ubuntu Chromium/34.0.1847.116 Chrome/34.0.1847.116 Safari/537.36'
+      }
+    };
+
+    return request(requestOptions)
       .then(htmlString => {
         const pageDom = new JSDOM(htmlString);
         const pageDocument = pageDom.window.document;
