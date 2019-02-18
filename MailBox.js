@@ -97,7 +97,6 @@ class MailBox {
         if (error) {
           reject(error);
         } else {
-          console.log(body)
           const pageDom = new JSDOM(body);
           const pageDocument = pageDom.window.document;
 
