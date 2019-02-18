@@ -1,6 +1,6 @@
 {
   "name": "temp-mailbox",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Node.js wrapper for https://temp-mail.org/en/api/",
   "main": "./MailBox.js",
   "types": "./MailBox.d.ts",
